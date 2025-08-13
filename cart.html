@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MangaStore Cart</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-danger" href="main.html">MangaStore</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="main.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link active" href="cart.html">Cart</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container my-5">
+  <h2 class="text-danger mb-4">Your Cart</h2>
+  <div id="cart-items" class="mb-4"></div>
+  <h4 id="total-price" class="text-light bg-dark p-3 rounded text-end"></h4>
+  <button id="clear-cart" class="btn btn-danger">Clear Cart</button>
+</div>
+
+<script>
+   function loadCart() {
+    const cartItemsContainer = document.getElementById('cart-items');
+    const totalPriceEl = document.getElementById('total-price');
+    const clearBtn = document.getElementById('clear-cart');
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    cartItemsContainer.innerHTML = '';
+
+    if (cart.length === 0) {
+      cartItemsContainer.innerHTML = '<p class="text-light bg-dark p-3 rounded">Your cart is empty.</p>';
+      totalPriceEl.textContent = '';
+      clearBtn.style.display = 'none';
+      return;
+    }
+
+    clearBtn.style.display = 'inline-block';
+
+    let total = 0;
+
+    cart.forEach((item, main) => {
+      total += item.price;
+
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'd-flex align-items-center justify-content-between bg-dark text-light p-3 rounded mb-3';
+
+      itemDiv.innerHTML = `
+        <div class="d-flex align-items-center" style="gap:15px;">
+          <img src="${item.image}" alt="${item.name}" style="width:80px; height:100px; object-fit:cover; border-radius:5px;">
+          <div>
+            <h5>${item.name}</h5>
+            <p class="mb-0">$${item.price.toFixed(2)}</p>
+          </div>
+        </div>
+        <button class="btn btn-sm btn-danger" onclick="removeFromCart(${main})">Remove</button>
+      `;
+
+      cartItemsContainer.appendChild(itemDiv);
+    });
+
+    totalPriceEl.textContent = 'Total Price: $' + total.toFixed(2);
+  }
+
+
+
+  function removeFromCart(main) {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.splice(main, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    loadCart();
+  }
+
+  document.getElementById('clear-cart').addEventListener('click', () => {
+    localStorage.removeItem('cart');
+    loadCart();
+  });
+
+  // Initialize
+  loadCart();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manga Store - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body.login-page {
+
+  background-image: url("WhatsApp\ Image\ 2025-08-12\ at\ 03.49.55_038140aa.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  background-attachment: fixed;
+}
+
+
+        .manga-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            border: 2px solid #14080a;
+        }
+
+        .manga-title {
+            color: #16090c;
+            font-weight: bold;
+            text-shadow: 1px 1px #fff;
+        }
+
+        .btn-manga {
+            background-color: #ff4d6d;
+            color: white;
+            font-weight: bold;
+            border-radius: 10px;
+        }
+
+        .btn-manga:hover {
+            background-color: #e33b5c;
+        }
+    </style>
+</head>
+<body class="login-page">
+
+    <div class="login-container d-flex justify-content-center align-items-center vh-100">
+        <div class="card p-4 shadow-lg manga-card">
+            <h2 class="text-center mb-4 manga-title">📚 Manga Store Login</h2>
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" id="email" class="form-control" placeholder="Enter email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="btn btn-manga w-100">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value.trim();
+
+            if (email && password) {
+                window.location.href = "main.html";
+            } else {
+                alert("Please fill in all fields!");
+            }
+        });
+    </script>
+
+</body>
+</html>
